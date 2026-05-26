@@ -7,6 +7,10 @@
 
     <nav>
         <a href="{{ route('admin.index') }}">Dashboard</a>
+        |
+        <a href="{{ route('admin.categories.index') }}">Categories</a>
+        |
+        <a href="{{ route('admin.products.index') }}">Products</a>
     </nav>
 
     <hr>
