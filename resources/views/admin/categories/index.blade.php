@@ -3,27 +3,43 @@
 @section('content')
     <h1>Categories</h1>
 
-    <a href="{{ route('admin.categories.create') }}">Add Category</a>
+    <a class="admin-button" href="{{ route('admin.categories.create') }}">Add Category</a>
 
     <hr>
 
     @if($categories->count() > 0)
-        <ul>
-            @foreach($categories as $category)
-                <li>
-                    {{ $category->name }}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-                    <a href="{{ route('admin.categories.edit', $category) }}">Edit</a>
+            <tbody>
+                @foreach($categories as $category)
+                    <tr>
+                        <td>{{ $category->name }}</td>
+                        <td>{{ $category->description }}</td>
+                        <td>{{ $category->status ? 'Active' : 'Passive' }}</td>
+                        <td>
+                            <div class="actions">
+                                <a class="admin-button" href="{{ route('admin.categories.edit', $category) }}">Edit</a>
 
-                    <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
+                                <form action="{{ route('admin.categories.destroy', $category) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
 
-                        <button type="submit">Delete</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
+                                    <button class="danger-button" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @else
         <p>No categories found.</p>
     @endif

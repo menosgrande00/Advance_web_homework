@@ -3,7 +3,7 @@
 @section('content')
     <h1>Products</h1>
 
-    <a href="{{ route('admin.products.create') }}">Add Product</a>
+    <a class="admin-button" href="{{ route('admin.products.create') }}">Add Product</a>
 
     <hr>
 
@@ -37,14 +37,16 @@
                         <td>{{ $product->stock }}</td>
                         <td>{{ $product->status ? 'Active' : 'Passive' }}</td>
                         <td>
-                            <a href="{{ route('admin.products.edit', $product) }}">Edit</a>
+                            <div class="actions">
+                                <a class="admin-button" href="{{ route('admin.products.edit', $product) }}">Edit</a>
 
-                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
+                                <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
 
-                                <button type="submit">Delete</button>
-                            </form>
+                                    <button class="danger-button" type="submit">Delete</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
