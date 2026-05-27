@@ -1,30 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ $product->name }}</title>
-</head>
-<body>
+@extends('layouts.app')
 
+@section('title', $product->name)
+
+@section('content')
     <p>
-        <a href="{{ route('home') }}">Back to Products</a>
+        <a href="{{ route('home') }}">← Back to Products</a>
     </p>
 
-    <h1>{{ $product->name }}</h1>
+    <div class="detail-card">
+        <h1>{{ $product->name }}</h1>
 
-    @if($product->image)
-        <img src="{{ asset('storage/' . $product->image) }}" width="300">
-    @endif
+        @if($product->image)
+            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+        @endif
 
-    <p>Category: {{ $product->category->name }}</p>
+        <p>
+            <strong>Category:</strong>
+            <a href="{{ route('categories.show', $product->category) }}">
+                {{ $product->category->name }}
+            </a>
+        </p>
 
-    <p>Price: {{ $product->price }} TL</p>
+        <p><strong>Price:</strong> {{ $product->price }} TL</p>
+        <p><strong>Stock:</strong> {{ $product->stock }}</p>
+        <p><strong>Status:</strong> {{ $product->status ? 'Active' : 'Passive' }}</p>
 
-    <p>Stock: {{ $product->stock }}</p>
-
-    <p>Status: {{ $product->status ? 'Active' : 'Passive' }}</p>
-
-    <h3>Description</h3>
-    <p>{{ $product->description }}</p>
-
-</body>
-</html>
+        <h3>Description</h3>
+        <p>{{ $product->description }}</p>
+    </div>
+@endsection

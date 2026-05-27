@@ -1,44 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Products</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>Products</h1>
+@section('title', 'Products')
 
-    <p>
-        <a href="{{ route('admin.index') }}">Admin Panel</a>
-    </p>
-
-    <hr>
+@section('content')
+    <h1 class="page-title">Products</h1>
 
     @if($products->count() > 0)
-        @foreach($products as $product)
-            <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px;">
-                @if($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" width="150">
-                @endif
+        <div class="product-grid">
+            @foreach($products as $product)
+                <div class="product-card">
+                    @if($product->image)
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                    @endif
 
-                <h2>{{ $product->name }}</h2>
+                    <h2>{{ $product->name }}</h2>
 
-                <p>
-                    Category:
-                    <a href="{{ route('categories.show', $product->category) }}">
-                        {{ $product->category->name }}
+                    <p>
+                        Category:
+                        <a href="{{ route('categories.show', $product->category) }}">
+                            {{ $product->category->name }}
+                        </a>
+                    </p>
+
+                    <p>Price: {{ $product->price }} TL</p>
+                    <p>Stock: {{ $product->stock }}</p>
+
+                    <a class="button" href="{{ route('products.show', $product) }}">
+                        View Detail
                     </a>
-                </p>
-
-                <p>Price: {{ $product->price }} TL</p>
-
-                <p>Stock: {{ $product->stock }}</p>
-
-                <a href="{{ route('products.show', $product) }}">View Detail</a>
-            </div>
-        @endforeach
+                </div>
+            @endforeach
+        </div>
     @else
         <p>No products found.</p>
     @endif
-
-</body>
-</html>
+@endsection
