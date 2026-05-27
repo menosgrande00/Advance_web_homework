@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return 'laravel project working';
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/products/{product}', [HomeController::class, 'show'])->name('products.show');
 
 Route::get('/admin', [AdminHomeController::class, 'index'])->name('admin.index');
 
