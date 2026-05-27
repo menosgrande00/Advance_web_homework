@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Products</title>
+    <title>{{ $category->name }}</title>
 </head>
 <body>
 
-    <h1>Products</h1>
-
     <p>
-        <a href="{{ route('admin.index') }}">Admin Panel</a>
+        <a href="{{ route('home') }}">Back to Products</a>
     </p>
+
+    <h1>{{ $category->name }}</h1>
+
+    @if($category->description)
+        <p>{{ $category->description }}</p>
+    @endif
 
     <hr>
 
@@ -22,13 +26,6 @@
 
                 <h2>{{ $product->name }}</h2>
 
-                <p>
-                    Category:
-                    <a href="{{ route('categories.show', $product->category) }}">
-                        {{ $product->category->name }}
-                    </a>
-                </p>
-
                 <p>Price: {{ $product->price }} TL</p>
 
                 <p>Stock: {{ $product->stock }}</p>
@@ -37,7 +34,7 @@
             </div>
         @endforeach
     @else
-        <p>No products found.</p>
+        <p>No products found in this category.</p>
     @endif
 
 </body>
