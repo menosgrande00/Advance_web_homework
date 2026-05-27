@@ -11,6 +11,7 @@
         <table border="1" cellpadding="8">
             <thead>
                 <tr>
+                    <th>Image</th>
                     <th>Name</th>
                     <th>Category</th>
                     <th>Price</th>
@@ -23,6 +24,13 @@
             <tbody>
                 @foreach($products as $product)
                     <tr>
+                        <td>
+                            @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" width="80">
+                            @else
+                                No image
+                            @endif
+                        </td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->price }}</td>

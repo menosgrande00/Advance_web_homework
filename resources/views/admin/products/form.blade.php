@@ -71,4 +71,16 @@
     </select>
 </div>
 
+<div>
+    <label>Image</label>
+    <input type="file" name="image">
+</div>
+
+@if(isset($product) && $product->image)
+    <div>
+        <p>Current Image:</p>
+        <img src="{{ asset('storage/' . $product->image) }}" width="100">
+    </div>
+@endif
+
 <button type="submit">Save</button>
