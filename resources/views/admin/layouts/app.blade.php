@@ -100,6 +100,16 @@
 <body>
 
     <nav class="admin-navbar">
+        @if(Auth::check())
+            <span style="color:white; margin-right: 15px;">
+                {{ Auth::user()->name }}
+            </span>
+
+            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
+        @endif
         <a href="{{ route('admin.index') }}">Dashboard</a>
         <a href="{{ route('admin.categories.index') }}">Categories</a>
         <a href="{{ route('admin.products.index') }}">Products</a>
