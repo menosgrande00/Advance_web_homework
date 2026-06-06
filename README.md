@@ -1,59 +1,227 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Advance Web Homework
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Advance Web Homework is a Laravel-based web application developed as a coursework project. The project includes user authentication, role-based admin access, category management, product management, and public product browsing pages.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Laravel 12 application structure
+- User registration and login
+- Laravel Breeze authentication
+- Role-based admin access
+- Admin dashboard
+- Category management
+- Product management
+- Public home page with active products
+- Product detail page
+- Product listing by category
+- Vite and Tailwind CSS frontend setup
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before running the project, make sure the following tools are installed on your computer:
 
-## Learning Laravel
+- PHP 8.2 or higher
+- Composer
+- Node.js and npm
+- Git
+- SQLite, MySQL, or another Laravel-supported database
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+The project uses PHP `^8.2` and Laravel `^12.0`.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+Clone the repository:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone https://github.com/menosgrande00/Advance_web_homework.git
+cd Advance_web_homework
+```
 
-### Premium Partners
+Install PHP dependencies:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+composer install
+```
 
-## Contributing
+Install JavaScript dependencies:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+npm install
+```
 
-## Code of Conduct
+Create the environment file:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+cp .env.example .env
+```
 
-## Security Vulnerabilities
+Generate the application key:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan key:generate
+```
+
+## Database Setup
+
+The default `.env.example` file is configured to use SQLite:
+
+```env
+DB_CONNECTION=sqlite
+```
+
+If you want to use SQLite, create the database file:
+
+```bash
+mkdir -p database
+touch database/database.sqlite
+```
+
+Then run the migrations:
+
+```bash
+php artisan migrate
+```
+
+To create the default admin user, run:
+
+```bash
+php artisan db:seed --class=AdminUserSeeder
+```
+
+Default admin login details:
+
+```text
+Email: admin@example.com
+Password: 12345678
+```
+
+You can also run the general database seeder:
+
+```bash
+php artisan db:seed
+```
+
+## Running the Project
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+In a second terminal, start the Vite development server:
+
+```bash
+npm run dev
+```
+
+Open the application in your browser:
+
+```text
+http://127.0.0.1:8000
+```
+
+To access the admin panel, log in with the admin account and visit:
+
+```text
+http://127.0.0.1:8000/admin
+```
+
+## Building Frontend Assets
+
+To build frontend assets for production:
+
+```bash
+npm run build
+```
+
+## Running Tests
+
+Run the Laravel test suite with:
+
+```bash
+php artisan test
+```
+
+If you are using SQLite, make sure the SQLite database file exists and migrations have been run before testing:
+
+```bash
+mkdir -p database
+touch database/database.sqlite
+php artisan migrate --force
+php artisan test
+```
+
+## Useful Commands
+
+Clear Laravel cache:
+
+```bash
+php artisan optimize:clear
+```
+
+Reset and re-run migrations:
+
+```bash
+php artisan migrate:fresh
+```
+
+Reset the database and run seeders:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Create the admin user again:
+
+```bash
+php artisan db:seed --class=AdminUserSeeder
+```
+
+## Project Structure
+
+```text
+app/Http/Controllers        Application controllers
+app/Models                  Eloquent models
+database/migrations         Database migration files
+database/seeders            Seeder files
+resources/views             Blade view files
+routes/web.php              Web route definitions
+public/                     Public assets
+```
+
+## Image and File Notes
+
+If the project uses uploaded product images, make sure image paths are stored as relative paths instead of local computer paths. For example:
+
+```text
+products/image-name.jpg
+```
+
+Do not store paths like:
+
+```text
+C:/Users/YourName/Desktop/image.jpg
+```
+
+For public project images that should be visible to other people after cloning the repository, place them inside the `public` directory, for example:
+
+```text
+public/images/example.jpg
+```
+
+Then reference them in Blade using:
+
+```php
+{{ asset('images/example.jpg') }}
+```
+
+For uploaded files stored in Laravel storage, create the storage link:
+
+```bash
+php artisan storage:link
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project was created for educational purposes.
