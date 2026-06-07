@@ -43,6 +43,10 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|boolean',
+            'keywords' => 'nullable|string|max:255',
+            'detail' => 'nullable|string',
+            'minstock' => 'nullable|integer|min:0',
+            'discount' => 'nullable|integer|min:0',
         ]);
 
         $imagePath = null;
@@ -53,10 +57,16 @@ class ProductController extends Controller
 
         Product::create([
             'category_id' => $request->category_id,
+            'user_id' => auth()->id(),
             'name' => $request->name,
+            'title' => $request->name,
+            'keywords' => $request->keywords,
             'description' => $request->description,
+            'detail' => $request->detail,
             'price' => $request->price,
             'stock' => $request->stock,
+            'minstock' => $request->minstock ?? 0,
+            'discount' => $request->discount ?? 0,
             'image' => $imagePath,
             'status' => $request->status,
         ]);
@@ -67,9 +77,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        $product->load('category', 'user');
+
+        return view('admin.products.show', compact('product'));
     }
 
     /**
@@ -95,6 +107,10 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|boolean',
+            'keywords' => 'nullable|string|max:255',
+            'detail' => 'nullable|string',
+            'minstock' => 'nullable|integer|min:0',
+            'discount' => 'nullable|integer|min:0',
         ]);
 
         $imagePath = $product->image;
@@ -109,10 +125,16 @@ class ProductController extends Controller
 
         $product->update([
             'category_id' => $request->category_id,
+            'user_id' => $product->user_id ?? auth()->id(),
             'name' => $request->name,
+            'title' => $request->name,
+            'keywords' => $request->keywords,
             'description' => $request->description,
+            'detail' => $request->detail,
             'price' => $request->price,
             'stock' => $request->stock,
+            'minstock' => $request->minstock ?? 0,
+            'discount' => $request->discount ?? 0,
             'image' => $imagePath,
             'status' => $request->status,
         ]);

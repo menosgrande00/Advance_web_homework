@@ -36,8 +36,22 @@
 </div>
 
 <div>
+    <label>Keywords</label>
+    <input 
+        type="text" 
+        name="keywords" 
+        value="{{ old('keywords', $product->keywords ?? '') }}"
+    >
+</div>
+
+<div>
     <label>Description</label>
     <textarea name="description">{{ old('description', $product->description ?? '') }}</textarea>
+</div>
+
+<div>
+    <label>Detail</label>
+    <textarea name="detail">{{ old('detail', $product->detail ?? '') }}</textarea>
 </div>
 
 <div>
@@ -56,6 +70,24 @@
         type="number" 
         name="stock" 
         value="{{ old('stock', $product->stock ?? 0) }}"
+    >
+</div>
+
+<div>
+    <label>Minimum Stock</label>
+    <input 
+        type="number" 
+        name="minstock" 
+        value="{{ old('minstock', $product->minstock ?? 0) }}"
+    >
+</div>
+
+<div>
+    <label>Discount</label>
+    <input 
+        type="number" 
+        name="discount" 
+        value="{{ old('discount', $product->discount ?? 0) }}"
     >
 </div>
 
@@ -79,7 +111,7 @@
 @if(isset($product) && $product->image)
     <div>
         <p>Current Image:</p>
-        <img src="{{ asset('storage/' . $product->image) }}" width="100">
+        <img src="{{ asset($product->image) }}" width="100">
     </div>
 @endif
 

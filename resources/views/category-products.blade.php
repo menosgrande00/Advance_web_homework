@@ -18,7 +18,7 @@
             @foreach($products as $product)
                 <div class="product-card">
                     @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
                     @endif
 
                     <h2>{{ $product->name }}</h2>

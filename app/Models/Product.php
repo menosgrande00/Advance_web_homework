@@ -8,11 +8,17 @@ class Product extends Model
 {
     protected $fillable = [
         'category_id',
+        'user_id',
         'name',
         'slug',
+        'title',
+        'keywords',
         'description',
+        'detail',
         'price',
         'stock',
+        'minstock',
+        'discount',
         'image',
         'status',
     ];
@@ -20,5 +26,10 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
