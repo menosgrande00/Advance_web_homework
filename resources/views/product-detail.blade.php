@@ -2,7 +2,7 @@
 
 @section('title', $product->name)
 
-@section('content')
+@section('admin_content')
     <p>
         <a href="{{ route('home') }}">← Back to Products</a>
     </p>

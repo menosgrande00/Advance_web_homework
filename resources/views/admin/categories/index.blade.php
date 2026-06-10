@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('content')
+@section('admin_content')
     <h1>Categories</h1>
 
     <a class="admin-button" href="{{ route('admin.categories.create') }}">Add Category</a>

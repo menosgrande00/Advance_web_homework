@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('content')
+@section('admin_content')
     <h1>Edit Category</h1>
 
     <form action="{{ route('admin.categories.update', $category) }}" method="POST">

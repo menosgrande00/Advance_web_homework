@@ -2,7 +2,7 @@
 
 @section('title', 'Products')
 
-@section('content')
+@section('admin_content')
     <h1 class="page-title">Products</h1>
 
     @if($products->count() > 0)

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('content')
+@section('admin_content')
     <style>
         table {
             width: 100%;
