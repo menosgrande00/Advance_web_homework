@@ -1,11 +1,12 @@
 @extends('admin.layouts.app')
 
+@section('page_title', 'Add Category')
+
 @section('admin_content')
-    <h1>Add Category</h1>
-
-    <form action="{{ route('admin.categories.store') }}" method="POST">
-        @csrf
-
-        @include('admin.categories.form')
-    </form>
+    <div class="card card-primary">
+        <form action="{{ route('admin.categories.store') }}" method="POST">
+            @csrf
+            <div class="card-body">@include('admin.categories.form')</div>
+        </form>
+    </div>
 @endsection

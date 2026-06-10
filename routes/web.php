@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -36,7 +36,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('index');
 
-        Route::resource('categories', CategoryController::class);
+        Route::resource('categories', CategoryController::class)->except('show');
         Route::resource('products', ProductController::class);
     });
 

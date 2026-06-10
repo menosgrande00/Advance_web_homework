@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::withCount('products')->latest()->paginate(10);
+
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -42,15 +43,9 @@ class CategoryController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.categories.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return redirect()
+            ->route('admin.categories.index')
+            ->with('success', 'Category created successfully.');
     }
 
     /**
@@ -78,7 +73,9 @@ class CategoryController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.categories.index');
+        return redirect()
+            ->route('admin.categories.index')
+            ->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -86,8 +83,16 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if ($category->products()->exists()) {
+            return redirect()
+                ->route('admin.categories.index')
+                ->with('error', 'A category containing products cannot be deleted.');
+        }
+
         $category->delete();
 
-        return redirect()->route('admin.categories.index');
+        return redirect()
+            ->route('admin.categories.index')
+            ->with('success', 'Category deleted successfully.');
     }
 }
