@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -29,6 +30,19 @@ class Product extends Model
             'price' => 'decimal:2',
             'status' => 'boolean',
         ];
+    }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if (! $this->image) {
+            return null;
+        }
+
+        if (Str::startsWith($this->image, ['http://', 'https://', 'storage/', 'images/'])) {
+            return asset($this->image);
+        }
+
+        return asset('storage/'.$this->image);
     }
 
     public function category()

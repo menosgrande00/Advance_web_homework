@@ -2,43 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')
-            ->where('status', 1)
-            ->whereHas('category', function ($query) {
-                $query->where('status', 1);
-            })
+        $categories = Category::where('status', true)
+            ->withCount(['products' => fn ($query) => $query->where('status', true)])
+            ->orderBy('name')
             ->get();
 
-        return view('home', compact('products'));
+        $products = Product::with('category')
+            ->where('status', true)
+            ->whereHas('category', function ($query) {
+                $query->where('status', true);
+            })
+            ->latest()
+            ->get();
+
+        return view('home', compact('categories', 'products'));
     }
 
     public function show(Product $product)
     {
-        if ($product->status != 1 || $product->category->status != 1) {
+        $product->load('category');
+
+        if (! $product->status || ! $product->category?->status) {
             abort(404);
         }
 
-        return view('product-detail', compact('product'));
+        $categories = Category::where('status', true)->orderBy('name')->get();
+
+        return view('product-detail', compact('categories', 'product'));
     }
 
     public function category(Category $category)
     {
-        if ($category->status != 1) {
+        if (! $category->status) {
             abort(404);
         }
 
+        $categories = Category::where('status', true)->orderBy('name')->get();
+
         $products = $category->products()
             ->with('category')
-            ->where('status', 1)
+            ->where('status', true)
+            ->latest()
             ->get();
 
-        return view('category-products', compact('category', 'products'));
+        return view('category-products', compact('categories', 'category', 'products'));
     }
 }
