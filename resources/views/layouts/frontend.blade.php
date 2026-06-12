@@ -65,6 +65,27 @@
             color: #fff;
             padding: 0;
         }
+        .store-search { display: flex !important; margin: 20px 8px 0; }
+        .store-search input { border: 1px solid #ddd; height: 38px; padding: 0 10px; width: 150px; }
+        .store-search button { background: #2a2a2a !important; color: #fff !important; height: 38px; padding: 0 12px !important; }
+        .store-form input, .store-form textarea {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 100%;
+        }
+        .store-form label { display: block; font-weight: 600; margin: 15px 0 6px; }
+        .store-button {
+            background: #2a2a2a;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px 18px;
+        }
+        .store-table { width: 100%; }
+        .store-table td, .store-table th { border-bottom: 1px solid #eee; padding: 14px 8px; text-align: left; }
+        .store-alert { margin: 110px auto -70px; max-width: 1100px; padding: 14px; }
+        .store-alert-success { background: #e8f7ed; color: #236b37; }
+        .store-alert-error { background: #fdecec; color: #9b2727; }
         @media (max-width: 991px) {
             .header-area .main-nav .logo-text { line-height: 100px; }
             .header-area .main-nav .nav li form { display: block; }
@@ -86,6 +107,12 @@
                         <a href="{{ route('home') }}" class="logo logo-text">Product <span>Store</span></a>
                         <ul class="nav">
                             <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a></li>
+                            <li>
+                                <form class="store-search" action="{{ route('search') }}" method="GET">
+                                    <input type="search" name="q" value="{{ request('q') }}" placeholder="Search products">
+                                    <button type="submit" aria-label="Search"><i class="fa fa-search"></i></button>
+                                </form>
+                            </li>
                             @if (($categories ?? collect())->isNotEmpty())
                                 <li class="submenu">
                                     <a href="javascript:;">Categories</a>
@@ -97,6 +124,7 @@
                                 </li>
                             @endif
                             @auth
+                                <li><a href="{{ route('orders.index') }}">My Orders</a></li>
                                 @if (auth()->user()->hasRole('admin'))
                                     <li><a href="{{ route('admin.index') }}">Admin Panel</a></li>
                                 @endif
@@ -110,6 +138,7 @@
                                 <li><a href="{{ route('login') }}">Login</a></li>
                                 <li><a href="{{ route('register') }}">Register</a></li>
                             @endauth
+                            <li><a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"></i> Cart ({{ app(\App\Services\CartService::class)->count() }})</a></li>
                         </ul>
                         <a class="menu-trigger"><span>Menu</span></a>
                     </nav>
@@ -117,6 +146,16 @@
             </div>
         </div>
     </header>
+
+    @if (session('success'))
+        <div class="store-alert store-alert-success">{{ session('success') }}</div>
+    @endif
+    @if (session('error'))
+        <div class="store-alert store-alert-error">{{ session('error') }}</div>
+    @endif
+    @if ($errors->any())
+        <div class="store-alert store-alert-error">{{ $errors->first() }}</div>
+    @endif
 
     <main>@yield('content')</main>
 

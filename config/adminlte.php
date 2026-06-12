@@ -316,6 +316,11 @@ return [
             'icon' => 'fas fa-fw fa-box',
         ],
         [
+            'text' => 'Orders',
+            'route' => 'admin.orders.index',
+            'icon' => 'fas fa-fw fa-shopping-cart',
+        ],
+        [
             'text' => 'Frontend',
             'route' => 'home',
             'icon' => 'fas fa-fw fa-home',

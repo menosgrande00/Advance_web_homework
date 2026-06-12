@@ -30,8 +30,8 @@ class FrontendStorefrontTest extends TestCase
             ->assertDontSee($inactiveCategory->name)
             ->assertDontSee('Hidden Product')
             ->assertDontSee('Product in Hidden Category')
-            ->assertDontSee('Add To Cart')
-            ->assertDontSee('Search')
+            ->assertSee('Cart (0)')
+            ->assertSee('Search products')
             ->assertDontSee('Newsletter');
     }
 
@@ -53,7 +53,7 @@ class FrontendStorefrontTest extends TestCase
             ->assertOk()
             ->assertSee($product->name)
             ->assertSee('Available Stock')
-            ->assertDontSee('Add To Cart');
+            ->assertSee('Add To Cart');
     }
 
     public function test_inactive_category_and_product_pages_return_not_found(): void

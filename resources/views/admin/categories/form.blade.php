@@ -22,6 +22,14 @@
 </div>
 
 <div class="form-group">
+    <label for="image">Homepage Card Image</label>
+    <input id="image" class="form-control-file @error('image') is-invalid @enderror" type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
+    @if (isset($category) && $category->image_url)
+        <img class="img-thumbnail mt-2" src="{{ $category->image_url }}" alt="{{ $category->name }}" style="width: 180px; height: 110px; object-fit: cover;">
+    @endif
+</div>
+
+<div class="form-group">
     <label for="status">Status</label>
     <select id="status" class="form-control @error('status') is-invalid @enderror" name="status" required>
         <option value="1" @selected(old('status', $category->status ?? 1) == 1)>Active</option>

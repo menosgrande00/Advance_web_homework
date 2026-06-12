@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -34,12 +35,18 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|boolean',
         ]);
+
+        $imagePath = $request->hasFile('image')
+            ? $request->file('image')->store('categories', 'public')
+            : null;
 
         Category::create([
             'name' => $request->name,
             'description' => $request->description,
+            'image' => $imagePath,
             'status' => $request->status,
         ]);
 
@@ -64,12 +71,23 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|boolean',
         ]);
+
+        $imagePath = $category->image;
+
+        if ($request->hasFile('image')) {
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
+            $imagePath = $request->file('image')->store('categories', 'public');
+        }
 
         $category->update([
             'name' => $request->name,
             'description' => $request->description,
+            'image' => $imagePath,
             'status' => $request->status,
         ]);
 
@@ -87,6 +105,10 @@ class CategoryController extends Controller
             return redirect()
                 ->route('admin.categories.index')
                 ->with('error', 'A category containing products cannot be deleted.');
+        }
+
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
         }
 
         $category->delete();

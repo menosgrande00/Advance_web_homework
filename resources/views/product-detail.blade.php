@@ -50,6 +50,17 @@
                             <a href="{{ route('categories.show', $product->category) }}">{{ $product->category->name }}</a>
                         </span>
 
+                        @if ($product->stock > 0)
+                            <form class="store-form mt-4" action="{{ route('cart.store', $product) }}" method="POST">
+                                @csrf
+                                <label for="quantity">Quantity</label>
+                                <input id="quantity" style="max-width: 100px;" type="number" name="quantity" min="1" max="{{ $product->stock }}" value="1">
+                                <button class="store-button ml-2" type="submit">Add To Cart</button>
+                            </form>
+                        @else
+                            <p class="stock-label"><strong>Out of stock</strong></p>
+                        @endif
+
                         <div class="total">
                             <div class="main-border-button">
                                 <a href="{{ route('categories.show', $product->category) }}">More from {{ $product->category->name }}</a>

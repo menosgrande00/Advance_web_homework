@@ -4,7 +4,7 @@
 
 @section('admin_content')
     <div class="card card-primary">
-        <form action="{{ route('admin.categories.store') }}" method="POST">
+        <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">@include('admin.categories.form')</div>
         </form>

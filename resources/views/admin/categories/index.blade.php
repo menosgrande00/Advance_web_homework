@@ -14,6 +14,7 @@
             <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Products</th>
@@ -24,6 +25,13 @@
                 <tbody>
                     @forelse ($categories as $category)
                         <tr>
+                            <td>
+                                @if ($category->image_url)
+                                    <img class="img-thumbnail" src="{{ $category->image_url }}" alt="{{ $category->name }}" style="width: 70px; height: 50px; object-fit: cover;">
+                                @else
+                                    <span class="text-muted">Default</span>
+                                @endif
+                            </td>
                             <td>{{ $category->name }}</td>
                             <td class="text-wrap">{{ $category->description ?: '-' }}</td>
                             <td><span class="badge badge-info">{{ $category->products_count }}</span></td>
@@ -47,7 +55,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="text-center text-muted py-4">No categories found.</td></tr>
+                        <tr><td colspan="6" class="text-center text-muted py-4">No categories found.</td></tr>
                     @endforelse
                 </tbody>
             </table>

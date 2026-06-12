@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Order;
 
 class AdminHomeController extends Controller
 {
@@ -16,6 +17,8 @@ class AdminHomeController extends Controller
             'products' => Product::count(),
             'active_products' => Product::where('status', true)->count(),
             'low_stock_products' => Product::whereColumn('stock', '<=', 'minstock')->count(),
+            'orders' => Order::count(),
+            'pending_orders' => Order::where('status', 'pending')->count(),
         ];
 
         $latestProducts = Product::with('category')->latest()->take(5)->get();

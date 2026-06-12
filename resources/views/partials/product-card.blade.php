@@ -7,6 +7,14 @@
                         <i class="fa fa-eye"></i>
                     </a>
                 </li>
+                @if ($product->stock > 0)
+                    <li>
+                        <form action="{{ route('cart.store', $product) }}" method="POST">
+                            @csrf
+                            <button type="submit" aria-label="Add {{ $product->name }} to cart"><i class="fa fa-shopping-cart"></i></button>
+                        </form>
+                    </li>
+                @endif
             </ul>
         </div>
         @if ($product->image_url)
@@ -22,5 +30,8 @@
             <a href="{{ route('categories.show', $product->category) }}">{{ $product->category->name }}</a>
             <span class="ml-2">Stock: {{ $product->stock }}</span>
         </div>
+        @if ($product->stock < 1)
+            <div class="product-meta">Out of stock</div>
+        @endif
     </div>
 </div>

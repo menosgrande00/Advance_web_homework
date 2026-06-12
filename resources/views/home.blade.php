@@ -40,7 +40,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <img src="{{ asset('frontend/images/baner-right-image-0'.($loop->iteration).'.jpg') }}" alt="{{ $category->name }}">
+                                            <img src="{{ $category->image_url ?: asset('frontend/images/baner-right-image-0'.($loop->iteration).'.jpg') }}" alt="{{ $category->name }}">
                                         </div>
                                     </div>
                                 </div>

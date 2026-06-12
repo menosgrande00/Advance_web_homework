@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -53,5 +54,26 @@ class HomeController extends Controller
             ->get();
 
         return view('category-products', compact('categories', 'category', 'products'));
+    }
+
+    public function search(Request $request)
+    {
+        $term = trim($request->string('q')->toString());
+        $categories = Category::where('status', true)->orderBy('name')->get();
+        $products = Product::with('category')
+            ->where('status', true)
+            ->whereHas('category', fn ($query) => $query->where('status', true))
+            ->when($term !== '', function ($query) use ($term) {
+                $query->where(function ($query) use ($term) {
+                    $query->where('name', 'like', '%'.$term.'%')
+                        ->orWhere('description', 'like', '%'.$term.'%')
+                        ->orWhere('keywords', 'like', '%'.$term.'%');
+                });
+            })
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('search', compact('categories', 'products', 'term'));
     }
 }
